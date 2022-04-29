@@ -29,7 +29,6 @@ public class SomministrazioneController : ControllerBase
         if (created)
         {
             return Ok();
-
         }
         else
         {

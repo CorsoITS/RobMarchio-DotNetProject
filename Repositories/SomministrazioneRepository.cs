@@ -142,41 +142,41 @@ public class SomministrazioneRepository
             Value = somministrazione.vaccino
         };
         command.Parameters.Add(parameterVaccino);
-        var parameterNome = new MySqlParameter()
+        var parameterDose = new MySqlParameter()
         {
             ParameterName = "dose",
             DbType = System.Data.DbType.String,
             Value = somministrazione.dose
         };
-        command.Parameters.Add(parameterNome);
-        var parameterCognome = new MySqlParameter()
+        command.Parameters.Add(parameterDose);
+        var parameterData_somministrazione = new MySqlParameter()
         {
             ParameterName = "data_somministrazione",
             DbType = System.Data.DbType.Date,
             Value = somministrazione.data_somministrazione
         };
-        command.Parameters.Add(parameterCognome);
-        var parameterUsername = new MySqlParameter()
+        command.Parameters.Add(parameterData_somministrazione);
+        var parameterNote = new MySqlParameter()
         {
             ParameterName = "note",
             DbType = System.Data.DbType.String,
             Value = somministrazione.note
         };
-        command.Parameters.Add(parameterUsername);
-        var parameterPassword = new MySqlParameter()
+        command.Parameters.Add(parameterNote);
+        var parameterOperatore_id = new MySqlParameter()
         {
             ParameterName = "opertore_id",
             DbType = System.Data.DbType.String,
             Value = somministrazione.opertore_id
         };
-        command.Parameters.Add(parameterPassword);
-        var parameterSede_id = new MySqlParameter()
+        command.Parameters.Add(parameterOperatore_id);
+        var parameterPersona_id = new MySqlParameter()
         {
             ParameterName = "persona_id",
             DbType = System.Data.DbType.Int16,
             Value = somministrazione.persona_id
         };
-        command.Parameters.Add(parameterSede_id);
+        command.Parameters.Add(parameterPersona_id);
         var result = Convert.ToBoolean(command.ExecuteNonQuery());
         appDb.Connection.Close();
         return result;

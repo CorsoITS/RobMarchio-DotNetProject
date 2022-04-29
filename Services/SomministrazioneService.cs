@@ -1,11 +1,22 @@
 using ProjWork.somministrazione.repository;
+using ProjWork.operatore.repository;
+using ProjWork.persona.repository;
 
 namespace ProjWork.somministrazione.service;
+
+
+
+
 
 public class SomministrazioneService
 {
 
     private SomministrazioneRepository somministrazioneRepository = new SomministrazioneRepository();
+
+// per usare PersonaRepo e OperatoreRepo non basta using namespace... 
+// ma devo istanziare anche l'oggetto prima, altrimenti non posso usarlo. 
+    private PersonaRepository personaRepo = new PersonaRepository();
+    private OperatoreRepository operatoreRepo = new OperatoreRepository();
 
     public IEnumerable<Somministrazione> GetSomministrazioni()
     {
@@ -20,8 +31,12 @@ public class SomministrazioneService
     public bool Create(Somministrazione somministrazione)
     {
         if (somministrazioneRepository.GetSomministrazione(somministrazione.id) == null)
-        {if ((somministrazione.dose == null) || (somministrazione.vaccino == null)) 
-            {
+        {if ((personaRepo.GetPersona(somministrazione.persona_id) == null) || 
+        (operatoreRepo.GetOperatore(somministrazione.opertore_id) == null)) {
+            return false;
+        } else if ((somministrazione.dose == null) || 
+        (somministrazione.vaccino == null) || 
+        (somministrazione.data_somministrazione >= DateTime.Now)) {
             return false;
             } 
             else if ((somministrazione.dose.Length < 1) || (somministrazione.vaccino.Length < 1))
