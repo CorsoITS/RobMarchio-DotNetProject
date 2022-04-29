@@ -24,7 +24,6 @@ public class SomministrazioneRepository
                 id = reader.GetInt16("id"),
                 vaccino = reader.GetString("vaccino"),
                 dose = reader.GetString("dose"),
-                // Chiedere GetDate qui e sul Model quale Date ? Datetime? Cambiare tutte le string in int qui
                 data_somministrazione = reader.GetDateTime("data_somministrazione"), 
                 note = reader.GetString("note"),
                 opertore_id = reader.GetInt16("opertore_id"),
@@ -71,8 +70,11 @@ public class SomministrazioneRepository
         return null;
     }
 
-    public Somministrazione GetSomministrazioneByTipo(string vaccino)
-    {
+
+    public IEnumerable<Somministrazione> GetSomministrazioneByTipo(string vaccino)
+    {   
+        var result = new List<Somministrazione>();
+
         appDb.Connection.Open();
         var command = appDb.Connection.CreateCommand();
         command.CommandText = "select id,vaccino,dose,data_somministrazione,note,opertore_id,persona_id from somministrazione where vaccino=@vaccino";
@@ -92,20 +94,124 @@ public class SomministrazioneRepository
                 id = reader.GetInt16("id"),
                 vaccino = reader.GetString("vaccino"),
                 dose = reader.GetString("dose"),
-                data_somministrazione = reader.GetDateTime("data_somministrazione"),
+                data_somministrazione = reader.GetDateTime("data_somministrazione"), 
                 note = reader.GetString("note"),
                 opertore_id = reader.GetInt16("opertore_id"),
                 persona_id = reader.GetInt16("persona_id")
             };
-            appDb.Connection.Close();
-            return somministrazione;
+            result.Add(somministrazione);
         }
-
         appDb.Connection.Close();
-        return null;
+
+        return result;
     }
 
 
+    public IEnumerable<Somministrazione> GetSomministrazioneByDose(string dose)
+    {   
+        var result = new List<Somministrazione>();
+
+        appDb.Connection.Open();
+        var command = appDb.Connection.CreateCommand();
+        command.CommandText = "select id,vaccino,dose,data_somministrazione,note,opertore_id,persona_id from somministrazione where dose=@dose";
+        var parameter = new MySqlParameter()
+        {
+            ParameterName = "dose",
+            DbType = System.Data.DbType.String,
+            Value = dose
+        };
+        command.Parameters.Add(parameter);
+        var reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            var somministrazione = new Somministrazione()
+            {
+                id = reader.GetInt16("id"),
+                vaccino = reader.GetString("vaccino"),
+                dose = reader.GetString("dose"),
+                data_somministrazione = reader.GetDateTime("data_somministrazione"), 
+                note = reader.GetString("note"),
+                opertore_id = reader.GetInt16("opertore_id"),
+                persona_id = reader.GetInt16("persona_id")
+            };
+            result.Add(somministrazione);
+        }
+        appDb.Connection.Close();
+
+        return result;
+    }
+
+    public IEnumerable<Somministrazione> GetSomministrazioneByUsername(string username)
+    {   
+        var result = new List<Somministrazione>();
+
+        appDb.Connection.Open();
+        var command = appDb.Connection.CreateCommand();
+        command.CommandText = "select som.id,vaccino,dose,data_somministrazione,note,opertore_id,persona_id from somministrazione as som left join opertore as op on som.opertore_id = op.id where op.username=@username";
+        var parameter = new MySqlParameter()
+        {
+            ParameterName = "username",
+            DbType = System.Data.DbType.String,
+            Value = username
+        };
+        command.Parameters.Add(parameter);
+        var reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            var somministrazione = new Somministrazione()
+            {
+                id = reader.GetInt16("id"),
+                vaccino = reader.GetString("vaccino"),
+                dose = reader.GetString("dose"),
+                data_somministrazione = reader.GetDateTime("data_somministrazione"), 
+                note = reader.GetString("note"),
+                opertore_id = reader.GetInt16("opertore_id"),
+                persona_id = reader.GetInt16("persona_id")
+            };
+            result.Add(somministrazione);
+        }
+        appDb.Connection.Close();
+
+        return result;
+    }
+
+
+    public IEnumerable<Somministrazione> GetSomministrazioneByCodFisc(string codice_fiscale)
+    {   
+        var result = new List<Somministrazione>();
+
+        appDb.Connection.Open();
+        var command = appDb.Connection.CreateCommand();
+        command.CommandText = "select som.id,vaccino,dose,data_somministrazione,note,opertore_id,persona_id from somministrazione as som left join persona as per on som.persona_id = per.id where per.codice_fiscale =@codice_fiscale";
+        var parameter = new MySqlParameter()
+        {
+            ParameterName = "codice_fiscale",
+            DbType = System.Data.DbType.String,
+            Value = codice_fiscale
+        };
+        command.Parameters.Add(parameter);
+        var reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            var somministrazione = new Somministrazione()
+            {
+                id = reader.GetInt16("id"),
+                vaccino = reader.GetString("vaccino"),
+                dose = reader.GetString("dose"),
+                data_somministrazione = reader.GetDateTime("data_somministrazione"), 
+                note = reader.GetString("note"),
+                opertore_id = reader.GetInt16("opertore_id"),
+                persona_id = reader.GetInt16("persona_id")
+            };
+            result.Add(somministrazione);
+        }
+        appDb.Connection.Close();
+
+        return result;
+    }
 
     public bool Create(Somministrazione somministrazione)
     {

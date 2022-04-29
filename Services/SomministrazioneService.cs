@@ -28,9 +28,27 @@ public class SomministrazioneService
         return somministrazioneRepository.GetSomministrazione(id);
     }
 
-    public Somministrazione GetSomministrazioneByTipo(string id)
+    public IEnumerable<Somministrazione> GetSomministrazioneByTipo(string vaccino)
     {
-        return somministrazioneRepository.GetSomministrazioneByTipo(id);
+        return somministrazioneRepository.GetSomministrazioneByTipo(vaccino);
+    }
+
+
+    public IEnumerable<Somministrazione> GetSomministrazioneByDose(string dose)
+    {
+        return somministrazioneRepository.GetSomministrazioneByDose(dose);
+    }
+
+
+    public IEnumerable<Somministrazione> GetSomministrazioneByUsername(string username)
+    {
+        return somministrazioneRepository.GetSomministrazioneByUsername(username);
+    }
+
+
+    public IEnumerable<Somministrazione> GetSomministrazioneByCodFisc(string codice_fiscale)
+    {
+        return somministrazioneRepository.GetSomministrazioneByCodFisc(codice_fiscale);
     }
 
     public bool Create(Somministrazione somministrazione)

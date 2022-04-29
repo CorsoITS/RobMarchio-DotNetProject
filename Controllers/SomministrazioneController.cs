@@ -24,12 +24,28 @@ public class SomministrazioneController : ControllerBase
 
 
     [HttpGet("/tipo/{vaccino}")]
-    public Somministrazione GetSomministrazioneByTipo(string vaccino)
+    public IEnumerable<Somministrazione> GetSomministrazioneByTipo(string vaccino)
     {
         return somministrazioneService.GetSomministrazioneByTipo(vaccino);
     }
 
+    [HttpGet("/dose/{dose}")]
+    public IEnumerable<Somministrazione> GetSomministrazioneByDose(string dose)
+    {
+        return somministrazioneService.GetSomministrazioneByDose(dose);
+    }
 
+    [HttpGet("/usernameoperatore/{username}")]
+    public IEnumerable<Somministrazione> GetSomministrazioneByUsername(string username)
+    {
+        return somministrazioneService.GetSomministrazioneByUsername(username);
+    }
+
+    [HttpGet("/codicefiscalepersona/{codice_fiscale}")]
+    public IEnumerable<Somministrazione> GetSomministrazioneByCodFisc(string codice_fiscale)
+    {//chiedere prof: come "castare" il badRequest qui dentro in caso di return vuoto dalla Repository? Booleano pefforza?
+        return somministrazioneService.GetSomministrazioneByCodFisc(codice_fiscale);
+    }
 
 
     [HttpPost]
