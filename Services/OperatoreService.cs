@@ -1,5 +1,7 @@
 using ProjWork.operatore.repository;
 using ProjWork.sede.repository;
+using System.Text; 
+using System.Security.Cryptography;
 
 namespace ProjWork.operatore.service;
 
@@ -19,6 +21,13 @@ public class OperatoreService
     public Operatore GetOperatore(int id)
     {
         return operatoreRepository.GetOperatore(id);
+    }
+
+    public string HashPassword(string plainText)
+    {
+        var byteArray = ASCIIEncoding.ASCII.GetBytes(plainText);
+        byte[] mySHA256 = SHA256.Create().ComputeHash(byteArray);
+        return Convert.ToBase64String(mySHA256);
     }
 
     public bool Create(Operatore operatore)
@@ -41,7 +50,7 @@ public class OperatoreService
                 return false;
             }
             else
-            {
+            {   operatore.password = HashPassword(operatore.password);
                 return operatoreRepository.Create(operatore);
             } 
     }    
