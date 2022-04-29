@@ -22,6 +22,16 @@ public class SomministrazioneController : ControllerBase
         return somministrazioneService.GetSomministrazione(id);
     }
 
+
+    [HttpGet("/tipo/{vaccino}")]
+    public Somministrazione GetSomministrazioneByTipo(string vaccino)
+    {
+        return somministrazioneService.GetSomministrazioneByTipo(vaccino);
+    }
+
+
+
+
     [HttpPost]
     public IActionResult Create(Somministrazione somministrazione)
     {

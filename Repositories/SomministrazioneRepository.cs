@@ -71,6 +71,42 @@ public class SomministrazioneRepository
         return null;
     }
 
+    public Somministrazione GetSomministrazioneByTipo(string vaccino)
+    {
+        appDb.Connection.Open();
+        var command = appDb.Connection.CreateCommand();
+        command.CommandText = "select id,vaccino,dose,data_somministrazione,note,opertore_id,persona_id from somministrazione where vaccino=@vaccino";
+        var parameter = new MySqlParameter()
+        {
+            ParameterName = "vaccino",
+            DbType = System.Data.DbType.String,
+            Value = vaccino
+        };
+        command.Parameters.Add(parameter);
+        var reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            var somministrazione = new Somministrazione()
+            {
+                id = reader.GetInt16("id"),
+                vaccino = reader.GetString("vaccino"),
+                dose = reader.GetString("dose"),
+                data_somministrazione = reader.GetDateTime("data_somministrazione"),
+                note = reader.GetString("note"),
+                opertore_id = reader.GetInt16("opertore_id"),
+                persona_id = reader.GetInt16("persona_id")
+            };
+            appDb.Connection.Close();
+            return somministrazione;
+        }
+
+        appDb.Connection.Close();
+        return null;
+    }
+
+
+
     public bool Create(Somministrazione somministrazione)
     {
         appDb.Connection.Open();

@@ -28,6 +28,11 @@ public class SomministrazioneService
         return somministrazioneRepository.GetSomministrazione(id);
     }
 
+    public Somministrazione GetSomministrazioneByTipo(string id)
+    {
+        return somministrazioneRepository.GetSomministrazioneByTipo(id);
+    }
+
     public bool Create(Somministrazione somministrazione)
     {
         if (somministrazioneRepository.GetSomministrazione(somministrazione.id) == null)
